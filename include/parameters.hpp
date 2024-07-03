@@ -1,10 +1,10 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 
-#include <cstdint>
+#include <stdint.h>
+#include <sycl/sycl.hpp>
 
-typedef struct
-{
+typedef struct {
     uint64_t seed;
     int n_threads;
     unsigned long n_particles;
@@ -17,9 +17,9 @@ typedef struct
 } Parameters;
 
 // Set the default parameters and read CLI
-Parameters *initialize_parameters(int argc, char *argv[]);
+Parameters *initialize_parameters(int argc, char *argv[], sycl::queue &q);
 
 // Free memory
-void free_parameters(Parameters *params);
+void free_parameters(Parameters *params,sycl::queue &q);
 
 #endif

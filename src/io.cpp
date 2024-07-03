@@ -3,12 +3,13 @@
 #include <cstdlib>
 #include <cstring>
 #include <iomanip> // Necessario per std::setw e std::setfill
+#include "utils.hpp"
 
 Io::Io()
 {
 }
 
-void Io::print_parameters(const Parameters *params) const
+void Io::print_parameters(Parameters *params) const
 {
     print_border();
     print_center("INPUT SUMMARY", 79);
@@ -119,7 +120,7 @@ void Io::read_input(int argc, char *argv[], Parameters *params)
         {
             if (++i < argc)
             {
-                params->n_events = atof(argv[i]);
+                params->n_events = std::stof(argv[i]);
             }
             else
             {
@@ -177,4 +178,27 @@ void Io::print_border() const
     std::cout << "=========================================="
                  "======================================"
               << std::endl;
+}
+
+void Io::showdevice(sycl::queue &q)
+{
+    Io::print_border();
+    Io::print_center("DEVICE INFO", 79);
+    Io::print_border();
+    // Output platform and device information.
+    auto device = q.get_device();
+    auto p_name = device.get_platform().get_info<sycl::info::platform::name>();
+    std::cout << std::setw(20) << "Platform Name: " << p_name << "\n";
+    auto p_version = device.get_platform().get_info<sycl::info::platform::version>();
+    std::cout << std::setw(20) << "Platform Version: " << p_version << "\n";
+    auto d_name = device.get_info<sycl::info::device::name>();
+    std::cout << std::setw(20) << "Device Name: " << d_name << "\n";
+    auto max_work_group = device.get_info<sycl::info::device::max_work_group_size>();
+    std::cout << std::setw(20) << "Max Work Group: " << max_work_group << "\n";
+    auto max_compute_units = device.get_info<sycl::info::device::max_compute_units>();
+    std::cout << std::setw(20) << "Max Compute Units: " << max_compute_units << "\n";
+    std::cout << "Device Vendor: " << device.get_info<sycl::info::device::vendor>() << "\n";
+    std::cout << "Driver Version: " << device.get_info<sycl::info::device::driver_version>() << "\n";
+    std::cout << "FP64 Support: " << (device.has(sycl::aspect::fp64) ? "Yes" : "No") << "\n";
+    Io::print_border();
 }

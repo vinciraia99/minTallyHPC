@@ -1,16 +1,15 @@
-#ifndef TALLY_H
-#define TALLY_H
+#ifndef TALLY_HPP
+#define TALLY_HPP
 
-#include <stdlib.h>
 #include "parameters.hpp"
+#include <sycl/sycl.hpp>
 
 // Tally results
 #define VALUE 0
 #define SUM 1
 #define SUM_SQ 2
 
-typedef struct
-{
+typedef struct {
   // Number of physical quantities to be tallied, e.g. reaction rates
   int n_scores;
 
@@ -23,14 +22,13 @@ typedef struct
   // flux, reaction rate). The third dimension is for the three tally result
   // types: the tally value for this cycle, the accumulated sum over all
   // cycles, and the sum squared over all cycles.
-  // double ***results;
-  float ***results;
+  float*** results;
 } Tally;
 
 // Allocate memory for tallies
-Tally *initialize_tallies(Parameters *params);
+Tally* initialize_tallies(Parameters* params, sycl::queue& q);
 
 // Free memory
-void free_tallies(Tally *tallies, int n);
+void free_tallies(Tally* tallies, int n, sycl::queue& q);
 
 #endif
