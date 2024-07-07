@@ -6,7 +6,7 @@
 
 typedef struct {
     uint64_t seed;
-    int n_threads;
+    int n_workitem;
     unsigned long n_particles;
     int n_tallies;
     int n_filter_bins;

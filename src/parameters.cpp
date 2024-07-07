@@ -4,12 +4,11 @@
 
 Parameters *initialize_parameters(int argc, char *argv[], sycl::queue &q)
 {
-  Parameters *params = sycl::malloc_shared<Parameters>(sizeof(Parameters), q);
+  Parameters *params = sycl::malloc_host<Parameters>(sizeof(Parameters), q);
 
   // Assign default parameters
   params->seed = 12345;
-  params->n_threads = 1;
-  params->n_particles = 100000;
+  params->n_particles = 1000;
   params->n_tallies = 180;
   params->n_filter_bins = 50952;
   params->n_scores = 6;
@@ -24,6 +23,8 @@ Parameters *initialize_parameters(int argc, char *argv[], sycl::queue &q)
   // standard deviation 10.5. The mean number of track in fuel scales linearly
   // with the number of radial regions.
   params->n_events = 5.4f;
+
+  params->n_workitem = 1024;
 
   // Read command line arguments
   Io io;

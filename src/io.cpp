@@ -4,6 +4,7 @@
 #include <cstring>
 #include <iomanip> // Necessario per std::setw e std::setfill
 #include "utils.hpp"
+#include <CL/sycl.hpp>
 
 Io::Io()
 {
@@ -15,7 +16,7 @@ void Io::print_parameters(Parameters *params) const
     print_center("INPUT SUMMARY", 79);
     print_border();
     std::cout << "RNG seed:                      " << params->seed << std::endl;
-    std::cout << "Number of threads:             " << params->n_threads << std::endl;
+    std::cout << "Number of work item:           " << params->n_workitem << std::endl;
     std::cout << "Number of particles:           ";
     print_fancy_int(params->n_particles);
     std::cout << "Number of tallies:             " << params->n_tallies << std::endl;
@@ -50,14 +51,10 @@ void Io::read_input(int argc, char *argv[], Parameters *params)
                 print_error(message);
             }
         }
-        else if (strcmp(arg, "-c") == 0 || strcmp(arg, "--threads") == 0)
-        {
-            if (++i < argc)
-            {
-                params->n_threads = atoi(argv[i]);
-            }
-            else
-            {
+        else if (strcmp(arg, "-c") == 0 || strcmp(arg, "--workitem") == 0) {
+            if (++i < argc) {
+                params->n_workitem = atoi(argv[i]);
+            } else {
                 print_error(message);
             }
         }
@@ -186,7 +183,7 @@ void Io::showdevice(sycl::queue &q)
     Io::print_center("DEVICE INFO", 79);
     Io::print_border();
     // Output platform and device information.
-    auto device = q.get_device();
+    auto device = q.get_device();  
     auto p_name = device.get_platform().get_info<sycl::info::platform::name>();
     std::cout << std::setw(20) << "Platform Name: " << p_name << "\n";
     auto p_version = device.get_platform().get_info<sycl::info::platform::version>();
@@ -200,5 +197,6 @@ void Io::showdevice(sycl::queue &q)
     std::cout << "Device Vendor: " << device.get_info<sycl::info::device::vendor>() << "\n";
     std::cout << "Driver Version: " << device.get_info<sycl::info::device::driver_version>() << "\n";
     std::cout << "FP64 Support: " << (device.has(sycl::aspect::fp64) ? "Yes" : "No") << "\n";
+    std::cout << std::endl;
     Io::print_border();
 }
