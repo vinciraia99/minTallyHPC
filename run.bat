@@ -1,5 +1,5 @@
 call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat" --force
-make clean
+make cleanw
 make
 sycl.exe
 pause

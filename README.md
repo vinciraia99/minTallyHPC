@@ -30,7 +30,7 @@ The settings can be changed using the following command line flags:
 
 | Option | Description| Default |
 |-------------|------------|---------------|
-| -c, --threads | Number of OpenMP threads | System default |
+| -c, --workitem | Number of Sycl Work Item | 1024 |
 | -r, --seed | RNG seed | 12345 |
 | -p, --particles | Number of particles | 100000 |
 | -t, --tallies | Number of tallies | 180 |

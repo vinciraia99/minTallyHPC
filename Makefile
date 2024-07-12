@@ -27,16 +27,9 @@ $(SRCDIR)/%.o: $(SRCDIR)/%.cpp
 $(PROGRAM): $(OBJECTS)
 	$(CPP) $(CPPFLAGS) $(OBJECTS) -o $(PROGRAM) -Wall -g
 
-# OS detection and setting appropriate clean command
-#ifeq ($(OS),Windows_NT)
-#    RM = del /f
-#else
-    RM = rm -f
-#endif
-
 # clean
 clean:
-	$(RM) *.pdb *.ilk src/*.o $(PROGRAM)
+	 rm -f *.pdb *.ilk src/*.o $(PROGRAM)
 
 cleanw:
 	del /f *.pdb *.ilk src\*.o $(PROGRAM)
