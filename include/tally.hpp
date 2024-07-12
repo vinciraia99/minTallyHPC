@@ -17,12 +17,9 @@ typedef struct {
   int n_filter_bins;
   int *filter_bins;
 
-  // Tally results for each bin. The first dimension is the combination of
-  // filters (e.g. specific cell). The second dimension is the score (e.g.
-  // flux, reaction rate). The third dimension is for the three tally result
-  // types: the tally value for this cycle, the accumulated sum over all
-  // cycles, and the sum squared over all cycles.
-  float*** results;
+  // Tally results for each bin stored in a monodimensional array.
+  // The size will be n_filter_bins * n_scores * 3
+  float* results;
 } Tally;
 
 // Allocate memory for tallies
@@ -30,5 +27,11 @@ Tally* initialize_tallies(Parameters* params, sycl::queue& q);
 
 // Free memory
 void free_tallies(Tally* tallies, int n, sycl::queue& q);
+
+SYCL_EXTERNAL void increment_value_atomic(float* array, int n_filter_bins, int n_scores, int filter_bin, int score, int tally_type, float increment);
+
+SYCL_EXTERNAL float get_value(float* array, int n_filter_bins, int n_scores, int filter_bin, int score, int tally_type);
+
+SYCL_EXTERNAL void set_value(float* array, int n_filter_bins, int n_scores, int filter_bin, int score, int tally_type, float value);
 
 #endif

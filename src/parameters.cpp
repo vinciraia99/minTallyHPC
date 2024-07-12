@@ -4,7 +4,7 @@
 
 Parameters *initialize_parameters(int argc, char *argv[], sycl::queue &q)
 {
-  Parameters *params = sycl::malloc_host<Parameters>(sizeof(Parameters), q);
+  Parameters *params = sycl::malloc_shared<Parameters>(sizeof(Parameters), q);
 
   // Assign default parameters
   params->seed = 12345;
