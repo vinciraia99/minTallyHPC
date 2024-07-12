@@ -9,16 +9,6 @@ To compile minTally with default settings, use the following command:
 ```bash
 make
 ```
-
-Compiler settings can be modified in the Makefile, and the following options can also be set:
-
-| Option | Description| Default |
-|-------------|------------|---------------|
-| OPENMP | Enables shared-memory parallelism using the OpenMP API | ON |
-| OPTIMIZE | Enables high optimization with the -O3 flag | ON|
-| DEBUG | Enables debugging with the -g flag | OFF |
-| PROFILE | Enables profiling with the -pg flag | OFF |
-
 ## Running
 
 To run minTally with default settings, use the following command:
