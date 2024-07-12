@@ -4,10 +4,9 @@
 #include <sycl/sycl.hpp>
 
 Tally* initialize_tallies(Parameters* params, sycl::queue& q) {
-    // Ottieni il seed RNG
+    // Get the RNG seed
     uint64_t seed = init_seed(0, params->seed);
 
-    // Alloca memoria per i tally
     Tally* tallies = sycl::malloc_shared<Tally>(params->n_tallies, q);
 
     for (int i = 0; i < params->n_tallies; ++i) {
