@@ -32,4 +32,4 @@ clean:
 	rm -f *.pdb *.ilk src/*.o $(PROGRAM)
 
 cleanw:
-	del /f *.pdb *.ilk src/*.o $(PROGRAM)
+	del /f *.pdb *.ilk src\*.o $(PROGRAM)
