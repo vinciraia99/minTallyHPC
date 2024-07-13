@@ -16,13 +16,14 @@ unsigned long long simulate(Parameters *params, Tally *tallies, sycl::queue &q)
     // Loop over particles
     q.submit([&](sycl::handler &h)
              { h.parallel_for(sycl::range<1>(params->n_workitem),
-                              sycl::reduction(verification_buf,h, std::plus<unsigned long long>()),
+                              sycl::reduction(verification_buf, h, std::plus<unsigned long long>()),
                               [=](sycl::item<1> idx, auto &verification_reduction)
                               {
                                 // Calculate start and end indices for particles
                                 unsigned long work_size = (params->n_particles + params->n_workitem - 1) / params->n_workitem;
                                 unsigned long start_idx = idx[0] * work_size;
-                                unsigned long end_idx = sycl::min(start_idx + work_size, params->n_particles);
+                                unsigned long end = (idx[0] + 1);
+                                unsigned long end_idx = sycl::min(end * work_size, params->n_particles);
 
                                 for (unsigned long i_p = start_idx; i_p < end_idx; ++i_p)
                                 {
@@ -90,8 +91,7 @@ unsigned long long simulate(Parameters *params, Tally *tallies, sycl::queue &q)
                                           increment_value_atomic(tallies[i_t].results, tallies[i_t].n_filter_bins, tallies[i_t].n_scores, filter_index, score_index, tally_type, score);
 
                                           // Update verification checksum
-                                          unsigned long long *ptr = (unsigned long long *)&score;
-                                          verification_reduction += *ptr;
+                                          verification_reduction += (unsigned long long)score;
                                         }
                                       }
                                       verification_reduction += (unsigned long long)i_c;
@@ -100,7 +100,7 @@ unsigned long long simulate(Parameters *params, Tally *tallies, sycl::queue &q)
                                 }
                               }); })
         .wait_and_throw();
-       sycl::host_accessor v_out(verification_buf, sycl::read_only);
+    sycl::host_accessor v_out(verification_buf, sycl::read_only);
     return v_out[0];
   }
   catch (std::exception const &e)
