@@ -1,5 +1,9 @@
-# name of the program
-PROGRAM = sycl.exe
+# Detect the operating system
+ifeq ($(OS),Windows_NT)
+    PROGRAM = mintally.exe
+else
+    PROGRAM = mintally.out
+endif
 
 # directory for source files
 SRCDIR = src
@@ -29,7 +33,7 @@ $(PROGRAM): $(OBJECTS)
 
 # clean
 clean:
-	rm -f *.pdb *.ilk src/*.o $(PROGRAM)
+	 rm -f *.pdb *.ilk $(SRCDIR)/*.o $(PROGRAM)
 
 cleanw:
-	del /f *.pdb *.ilk src/*.o $(PROGRAM)
+	del /f *.pdb *.ilk $(SRCDIR)\*.o $(PROGRAM)

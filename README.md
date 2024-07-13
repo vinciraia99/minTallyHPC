@@ -13,7 +13,11 @@ make
 
 To run minTally with default settings, use the following command:
 ```bash
-./bin/minTally
+./mintally.out (on linux)
+```
+
+```cmd
+mintally.exe (on Windows)
 ```
 
 The settings can be changed using the following command line flags:
