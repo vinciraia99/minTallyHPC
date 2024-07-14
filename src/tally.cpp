@@ -57,6 +57,6 @@ float get_value(float *array, int n_filter_bins, int n_scores, int filter_bin, i
 void increment_value_atomic(float *array, int n_filter_bins, int n_scores, int filter_bin, int score, int tally_type, float increment)
 {
     int idx = (filter_bin * n_scores * 3) + (score * 3) + tally_type;
-    auto atomic_ref = sycl::atomic_ref<float, sycl::memory_order::relaxed, sycl::memory_scope::device, sycl::access::address_space::global_space>(array[idx]);
+    auto atomic_ref = sycl::atomic_ref<float, sycl::memory_order::relaxed, sycl::memory_scope::work_group, sycl::access::address_space::global_space>(array[idx]);
     atomic_ref.fetch_add(increment);
 }
