@@ -50,4 +50,4 @@ Sets the average number of tally events per particle. This represents, e.g., the
 
 ## Verification
 
-A verification checksum is generated during the simulation and displayed with the results. This can be used as a reference to check the correctness of other versions or configurations of the code. Varying the number of OpenMP threads should not alter the results, but changing the other runtime options will result in a different verification checksum.
+A verification checksum is generated during the simulation and displayed with the results. This can be used as a reference to check the correctness of other versions or configurations of the code. Varying the number of Sycl work item should not alter the results, but changing the other runtime options will result in a different verification checksum.
