@@ -24,8 +24,8 @@ The settings can be changed using the following command line flags:
 
 | Option | Description| Default |
 |-------------|------------|---------------|
-| -c, --workitem | Number of Sycl Work Item | 1024 |
-| -r, --seed | RNG seed | 12345 |
+| -c, --workitem | Number of Sycl Work Item | Max work goup size |
+| -r, --seed | RNG seed | 1000 |
 | -p, --particles | Number of particles | 100000 |
 | -t, --tallies | Number of tallies | 180 |
 | -f, --filter-bins | Number of tally filter bins | 50952 |

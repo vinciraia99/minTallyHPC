@@ -51,10 +51,14 @@ void Io::read_input(int argc, char *argv[], Parameters *params)
                 print_error(message);
             }
         }
-        else if (strcmp(arg, "-c") == 0 || strcmp(arg, "--workitem") == 0) {
-            if (++i < argc) {
+        else if (strcmp(arg, "-c") == 0 || strcmp(arg, "--workitem") == 0)
+        {
+            if (++i < argc)
+            {
                 params->n_workitem = atoi(argv[i]);
-            } else {
+            }
+            else
+            {
                 print_error(message);
             }
         }
@@ -183,7 +187,7 @@ void Io::showdevice(sycl::queue &q)
     Io::print_center("DEVICE INFO", 79);
     Io::print_border();
     // Output platform and device information.
-    auto device = q.get_device();  
+    auto device = q.get_device();
     auto p_name = device.get_platform().get_info<sycl::info::platform::name>();
     std::cout << std::setw(20) << "Platform Name: " << p_name << "\n";
     auto p_version = device.get_platform().get_info<sycl::info::platform::version>();

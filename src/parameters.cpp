@@ -24,7 +24,10 @@ Parameters *initialize_parameters(int argc, char *argv[], sycl::queue &q)
   // with the number of radial regions.
   params->n_events = 5.4f;
 
-  params->n_workitem = 1024;
+  sycl::device device = q.get_device();
+  size_t max_work_group_size = device.get_info<sycl::info::device::max_work_group_size>();
+
+  params->n_workitem = max_work_group_size;
 
   // Read command line arguments
   Io io;
